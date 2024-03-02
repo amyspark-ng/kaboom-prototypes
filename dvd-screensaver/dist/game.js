@@ -4452,12 +4452,6 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
           );
         }
       });
-      onMousePress("left", () => {
-        logo.pos = mousePos();
-      });
-      onKeyPress("space", () => {
-        HITTHECORNER();
-      });
       const logo = add([
         sprite("dvd"),
         pos(),
@@ -4466,7 +4460,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
         scale(0.125, 0.12),
         { vel: Vec2.fromAngle(rand(rand(-50, 50), rand(-50, 50))) }
       ]);
-      logo.pos = vec2(rand(100, width() - 150), rand(100, height() - 100));
+      logo.pos = vec2(rand(100, width() - 300), rand(100, height() - 300));
       let speed = 300;
       onKeyDown("left", () => {
         speed = speed - 10;

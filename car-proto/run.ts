@@ -21,7 +21,7 @@ async function buildGame() {
 		target: "es6",
 		keepNames: true,
 		logLevel: "silent",
-		outfile: "/dist/game.js",
+		outfile: "dist/game.js",
 	});
 }
 

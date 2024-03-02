@@ -41,7 +41,7 @@ export function gamescene() {
 		])
 
 		
-		logo.pos = vec2(rand(100, width() - 150), rand(100, height() - 100))
+		logo.pos = vec2(rand(100, width() - 300), rand(100, height() - 300))
 
 		// logo.pos = vec2(
 		// randi(logo.width * 2, width() - (logo.width * logo.scale.x) - 100),
