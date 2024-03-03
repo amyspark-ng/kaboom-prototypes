@@ -4502,7 +4502,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
         }
         if (dvd == true) {
           logo.use(sprite("dvd"));
-          logo.use(scale(0.2));
+          logo.use(scale(0.125, 0.12));
         }
       });
       onKeyPress("f", () => {
