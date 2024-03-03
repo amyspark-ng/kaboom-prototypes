@@ -99,7 +99,7 @@ export function gamescene() {
 			}
 			if (dvd == true) {
 				logo.use(sprite("dvd"))
-				logo.use(scale(0.2))
+				logo.use(scale(0.125, 0.120))
 			}
 		})
 
