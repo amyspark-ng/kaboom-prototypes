@@ -6,6 +6,7 @@ import { loadAssets } from "./loader.js"
 export const k = kaboom({
 	width: 1024,
 	height: 576,
+	canvas: document.getElementById("kaboom-canva")
 });
 
 loadAssets()
