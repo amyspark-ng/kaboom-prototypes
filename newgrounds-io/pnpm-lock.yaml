@@ -5,18 +5,12 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  cors:
-    specifier: ^2.8.5
-    version: 2.8.5
   esbuild:
     specifier: ^0.20.2
     version: 0.20.2
   kaboom:
     specifier: ^3000.1.17
     version: 3000.1.17
-  newgrounds.js:
-    specifier: ^3.1.2
-    version: 3.1.2
 
 packages:
 
@@ -227,14 +221,6 @@ packages:
     dev: false
     optional: true
 
-  /cors@2.8.5:
-    resolution: {integrity: sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==}
-    engines: {node: '>= 0.10'}
-    dependencies:
-      object-assign: 4.1.1
-      vary: 1.1.2
-    dev: false
-
   /esbuild@0.20.2:
     resolution: {integrity: sha512-WdOOppmUNU+IbZ0PaDiTst80zjnrOkyJNHoKupIcVyU8Lvla3Ugx94VzkQ32Ijqd7UhHJy75gNWDMUekcrSJ6g==}
     engines: {node: '>=12'}
@@ -268,18 +254,4 @@ packages:
 
   /kaboom@3000.1.17:
     resolution: {integrity: sha512-npAtjGxj9Oj9vLpXfURck9eUPHR2ac1Lhc1bNcZ0NWcs+Lgs40Ty+wjujv1C2DwjWvxaX+3r2G64M35BS/Ry2g==}
-    dev: false
-
-  /newgrounds.js@3.1.2:
-    resolution: {integrity: sha512-Wfbq6Qtqw/n6FtoMUV32pcB5UO/OlZY4BJZs3XxP68Lb2VMGMthUe6G89bj7/QvF1E57XwcxVG6Q4DjxgmehYw==}
-    dev: false
-
-  /object-assign@4.1.1:
-    resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
-    engines: {node: '>=0.10.0'}
-    dev: false
-
-  /vary@1.1.2:
-    resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
-    engines: {node: '>= 0.8'}
     dev: false

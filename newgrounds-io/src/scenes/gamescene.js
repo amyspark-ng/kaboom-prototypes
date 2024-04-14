@@ -175,6 +175,14 @@ export function gamescene() {
 				anchor("center"),
 				"boardText"
 			])
+
+			add([
+				sprite("noicon"),
+				pos(width() - 60, posY),
+				anchor("center"),
+				scale(0.8),
+				"boardIcon",
+			])
 		}
 		
 		if (NGIO.isInitialized) {
@@ -192,6 +200,10 @@ export function gamescene() {
 
 			for (let i = 0; i < scoresFromNg.length; i++) {
 				get("boardText", { recursive: true })[i].text = `#${i + 1} - ${scoresFromNg[i].user.name} - ${scoresFromNg[i].value}`
+				loadRoot("")
+				loadSprite(`${scoresFromNg[i].user.name}_icon`, `${scoresFromNg[i].user.icons.large}`)
+				loadRoot("./assets/")
+				get("boardIcon", { recursive: true })[i].use(sprite(`${scoresFromNg[i].user.name}_icon`))
 			}
 		}
 

@@ -4179,7 +4179,6 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
             theText.text = "You logged in!!!! kewl....";
             loadRoot("");
             userIcon = loadSprite("userIcon", NGIO.session.user.icons.large);
-            console.log(userIcon);
             loadRoot("./assets/");
             if (userIcon.data != null) {
               icon.unuse("rect");
@@ -4340,6 +4339,13 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
           anchor("center"),
           "boardText"
         ]);
+        add([
+          sprite("noicon"),
+          pos(width() - 60, posY),
+          anchor("center"),
+          scale(0.8),
+          "boardIcon"
+        ]);
       }
       if (NGIO.isInitialized) {
         NGIO.getScores(13611, scoreOptions, onScoresLoaded);
@@ -4352,6 +4358,10 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
         }
         for (let i2 = 0; i2 < scoresFromNg.length; i2++) {
           get("boardText", { recursive: true })[i2].text = `#${i2 + 1} - ${scoresFromNg[i2].user.name} - ${scoresFromNg[i2].value}`;
+          loadRoot("");
+          loadSprite(`${scoresFromNg[i2].user.name}_icon`, `${scoresFromNg[i2].user.icons.large}`);
+          loadRoot("./assets/");
+          get("boardIcon", { recursive: true })[i2].use(sprite(`${scoresFromNg[i2].user.name}_icon`));
         }
       }
       wait(10, () => {
