@@ -55,7 +55,6 @@ export function gamescene() {
 			if (userIcon.data != null) {
 				icon.unuse("rect")
 				icon.use(sprite("userIcon"))
-				icon.use(scale(1.666666666))
 			}
 			else {
 				debug.log("couldn't load your pfp :(")
@@ -173,7 +172,9 @@ export function gamescene() {
 				text(`#${i + 1}  - No user - No Score`),
 				pos(750, posY),
 				anchor("center"),
-				"boardText"
+				area(),
+				"boardText",
+				"score",
 			])
 
 			add([
@@ -181,7 +182,9 @@ export function gamescene() {
 				pos(width() - 60, posY),
 				anchor("center"),
 				scale(0.8),
+				area(),
 				"boardIcon",
+				"score",
 			])
 		}
 		
@@ -204,8 +207,13 @@ export function gamescene() {
 				loadSprite(`${scoresFromNg[i].user.name}_icon`, `${scoresFromNg[i].user.icons.large}`)
 				loadRoot("./assets/")
 				get("boardIcon", { recursive: true })[i].use(sprite(`${scoresFromNg[i].user.name}_icon`))
+				get("score", { recursive: true })[i].username = scoresFromNg[i].user.name
 			}
 		}
+
+		onClick("score", (score) => {
+			window.open(`https://${score.username}.newgrounds.com`)
+		})
 
 		// upload score
 		wait(10, () => {

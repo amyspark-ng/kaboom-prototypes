@@ -4237,7 +4237,6 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
         if (userIcon.data != null) {
           icon2.unuse("rect");
           icon2.use(sprite("userIcon"));
-          icon2.use(scale(1.666666666));
         } else {
           debug.log("couldn't load your pfp :(");
         }
