@@ -4216,7 +4216,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
   function gamescene() {
     return scene("gamescene", () => {
       volumeManager();
-      setBackground(rgb(25, 28, 33));
+      setBackground(rgb(9, 11, 13));
       let title = add([
         text(NGIO.hasUser ? `Welcome to the game, ${NGIO.session.user.name}` : "Welcome to the game, no NG guy"),
         anchor("left"),
@@ -4235,10 +4235,10 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
       ]);
       if (NGIO.hasUser) {
         if (userIcon.data != null) {
-          icon2.unuse("rect");
           icon2.use(sprite("userIcon"));
         } else {
           debug.log("couldn't load your pfp :(");
+          icon2.use(sprite("erroricon"));
         }
       } else {
       }
@@ -4335,7 +4335,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
         posY += 50;
         add([
           text(`#${i2 + 1}  - No user - No Score`),
-          pos(580, posY),
+          pos(630, posY),
           anchor("left"),
           area(),
           "boardText",
@@ -4343,7 +4343,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
         ]);
         add([
           sprite("noicon"),
-          pos(width() - 60, posY),
+          pos(590, posY),
           anchor("center"),
           scale(0.8),
           area(),
@@ -4364,14 +4364,17 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
         for (let i2 = 0; i2 < scoresFromNg.length; i2++) {
           get("boardText", { recursive: true })[i2].text = `#${i2 + 1} - ${scoresFromNg[i2].user.name} - ${scoresFromNg[i2].value}`;
           loadRoot("");
-          loadSprite(`${scoresFromNg[i2].user.name}_icon`, `${scoresFromNg[i2].user.icons.large}`);
+          let scoreUserIcon = loadSprite(`${scoresFromNg[i2].user.name}_icon`, `${scoresFromNg[i2].user.icons.large}`);
           loadRoot("./assets/");
-          get("boardIcon", { recursive: true })[i2].use(sprite(`${scoresFromNg[i2].user.name}_icon`));
-          get(["boardIcon, boardText"], { recursive: true })[i2].username = scoresFromNg[i2].user.name;
+          if (scoreUserIcon.data != null)
+            get("boardIcon", { recursive: true })[i2].use(sprite(`${scoresFromNg[i2].user.name}_icon`));
+          else
+            get("boardIcon", { recursive: true })[i2].use(sprite("erroricon"));
+          get("boardText", { recursive: true })[i2].username = scoresFromNg[i2].user.name;
+          get("boardIcon", { recursive: true })[i2].username = scoresFromNg[i2].user.name;
         }
       }
-      onClick(["boardIcon", "boardText"], (score) => {
-        debug.log(score.username);
+      onClick("score", (score) => {
         if (score.username != void 0) {
           window.open(`https://${score.username}.newgrounds.com`);
         }
@@ -4399,6 +4402,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     loadBean();
     loadSound("volumeChange", "sounds/volumeChange.wav");
     loadSprite("noicon", "sprites/noicon.png");
+    loadSprite("erroricon", "sprites/erroricon.png");
     loadSprite("osaka", "sprites/osaka.png");
     gamescene();
     introScene();
