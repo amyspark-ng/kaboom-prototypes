@@ -7,6 +7,7 @@ export function loadAssets() {
 	loadSound("volumeChange", "sounds/volumeChange.wav")
 
 	loadSprite("noicon", "sprites/noicon.png")
+	loadSprite("erroricon", "sprites/erroricon.png")
 
 	loadSprite("osaka", "sprites/osaka.png")
 	// scenes

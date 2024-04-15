@@ -29,7 +29,7 @@ export function gamescene() {
 		// put in the first scene that the game starts in
 		volumeManager()
 		
-		setBackground(BLACK)
+		setBackground(rgb(9, 11, 13))
 
 		let title = add([
 			text(NGIO.hasUser ? `Welcome to the game, ${NGIO.session.user.name}` : "Welcome to the game, no NG guy"),
@@ -53,17 +53,17 @@ export function gamescene() {
 
 		if (NGIO.hasUser) {
 			if (userIcon.data != null) {
-				icon.unuse("rect")
 				icon.use(sprite("userIcon"))
 			}
 			else {
 				debug.log("couldn't load your pfp :(")
+				icon.use(sprite("erroricon"))
 			}
 		}
 
 		// you didn't log in, no worries no icon for you
 		else {
-
+			// it already does that, lol!!!
 		}
 
 		let medal1 = add([
@@ -160,18 +160,19 @@ export function gamescene() {
 			period: NGIO.PERIOD_ALL_TIME,
 			social: false,
 			skip: 0,
+			limit: 10,
 		}
 
 		let scoresFromNg;
 
 		// score board
 		let posY = 10
-		for (let i = 0; i < 10; i++) {
+		for (let i = 0; i < scoreOptions.limit; i++) {
 			posY += 50
 			add([
 				text(`#${i + 1}  - No user - No Score`),
-				pos(750, posY),
-				anchor("center"),
+				pos(630, posY),
+				anchor("left"),
 				area(),
 				"boardText",
 				"score",
@@ -179,7 +180,7 @@ export function gamescene() {
 
 			add([
 				sprite("noicon"),
-				pos(width() - 60, posY),
+				pos(590, posY),
 				anchor("center"),
 				scale(0.8),
 				area(),
@@ -201,18 +202,25 @@ export function gamescene() {
 				scoresFromNg = scores
 			}
 
+			console.log(scoresFromNg)
+
 			for (let i = 0; i < scoresFromNg.length; i++) {
 				get("boardText", { recursive: true })[i].text = `#${i + 1} - ${scoresFromNg[i].user.name} - ${scoresFromNg[i].value}`
 				loadRoot("")
-				loadSprite(`${scoresFromNg[i].user.name}_icon`, `${scoresFromNg[i].user.icons.large}`)
+				let scoreUserIcon = loadSprite(`${scoresFromNg[i].user.name}_icon`, `${scoresFromNg[i].user.icons.large}`)
 				loadRoot("./assets/")
-				get("boardIcon", { recursive: true })[i].use(sprite(`${scoresFromNg[i].user.name}_icon`))
-				get("score", { recursive: true })[i].username = scoresFromNg[i].user.name
+				if (scoreUserIcon.data != null)	get("boardIcon", { recursive: true })[i].use(sprite(`${scoresFromNg[i].user.name}_icon`))
+				else get("boardIcon", { recursive: true })[i].use(sprite("erroricon"))
+				// give username to click
+				get("boardText", { recursive: true })[i].username = scoresFromNg[i].user.name
+				get("boardIcon", { recursive: true })[i].username = scoresFromNg[i].user.name
 			}
 		}
 
 		onClick("score", (score) => {
-			window.open(`https://${score.username}.newgrounds.com`)
+			if (score.username != undefined) {
+				window.open(`https://${score.username}.newgrounds.com`)
+			}
 		})
 
 		// upload score
