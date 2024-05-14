@@ -31,6 +31,14 @@ export function gamescene() {
 		
 		setBackground(rgb(9, 11, 13))
 
+		loadRoot("")
+		loadSprite("kat", "https://media.discordapp.net/attachments/952385185377288232/1229579681892798547/cat.png?ex=66303250&is=661dbd50&hm=49f684a820455936c0963f824af5bcb7176352d526780737c96ac31eb525aae4&=&format=webp&quality=lossless")
+		loadRoot("./assets/")
+
+		add([
+			sprite("kat")
+		])
+
 		let title = add([
 			text(NGIO.hasUser ? `Welcome to the game, ${NGIO.session.user.name}` : "Welcome to the game, no NG guy"),
 			anchor("left"),
@@ -52,7 +60,7 @@ export function gamescene() {
 		])
 
 		if (NGIO.hasUser) {
-			if (userIcon.data != null) {
+			if (userIcon == true) {
 				icon.use(sprite("userIcon"))
 			}
 			else {
@@ -76,6 +84,7 @@ export function gamescene() {
 				update() {
 					if (GameState.score > 5 && GameState.medals.medal1.unlocked == false) {
 						this.color = WHITE
+						this.use("medal")
 					}
 
 					if (GameState.medals.medal1.unlocked) {
@@ -107,6 +116,7 @@ export function gamescene() {
 				update() {
 					if (GameState.score > 20 && GameState.medals.medal2.unlocked == false) {
 						this.color = WHITE
+						this.use("medal")
 					}
 					
 					if (GameState.medals.medal2.unlocked) {
@@ -135,6 +145,7 @@ export function gamescene() {
 			anchor("center"),
 			scale(),
 			area(),
+			"clicker",
 		])
 		
 		clicker.onClick(() => {
@@ -189,6 +200,14 @@ export function gamescene() {
 			])
 		}
 		
+		onHover(["score", "clicker", "medal"], () => {
+			setCursor("pointer")
+		})
+
+		onHoverEnd("score", () => {
+			setCursor("default")
+		})
+
 		if (NGIO.isInitialized) {
 			NGIO.getScores(13611, scoreOptions, onScoresLoaded)
 		}
@@ -202,18 +221,23 @@ export function gamescene() {
 				scoresFromNg = scores
 			}
 
-			console.log(scoresFromNg)
+			// console.log(scoresFromNg)
 
 			for (let i = 0; i < scoresFromNg.length; i++) {
 				get("boardText", { recursive: true })[i].text = `#${i + 1} - ${scoresFromNg[i].user.name} - ${scoresFromNg[i].value}`
 				loadRoot("")
-				let scoreUserIcon = loadSprite(`${scoresFromNg[i].user.name}_icon`, `${scoresFromNg[i].user.icons.large}`)
+				// finally
+				loadSprite(`${scoresFromNg[i].user.name}_icon`, `${scoresFromNg[i].user.icons.large}`).onError(() => {
+					get("boardIcon", { recursive: true })[i].use(sprite("erroricon"))
+				}).onLoad(() => {
+					get("boardIcon", { recursive: true })[i].use(sprite(`${scoresFromNg[i].user.name}_icon`))
+				})
 				loadRoot("./assets/")
-				if (scoreUserIcon.data != null)	get("boardIcon", { recursive: true })[i].use(sprite(`${scoresFromNg[i].user.name}_icon`))
-				else get("boardIcon", { recursive: true })[i].use(sprite("erroricon"))
 				// give username to click
 				get("boardText", { recursive: true })[i].username = scoresFromNg[i].user.name
 				get("boardIcon", { recursive: true })[i].username = scoresFromNg[i].user.name
+			
+				console.log(scoresFromNg[i].user.icons.large)
 			}
 		}
 
@@ -241,5 +265,17 @@ export function gamescene() {
 				setData("testy-test-save", GameState)
 			})
 		}) 
+		
+		async function main() {
+			const fetchedImage = await fetch("https://uimg.ngfiles.com/icons/9439/9439440_large.jpg?f1623861494", {
+				mode: 'cors', // Set the mode to 'cors'
+				headers: {
+					'Access-Control-Allow-Origin': '*' // Specify allowed origins (replace '*' with specific domains)
+				}
+			});
+			console.log(fetchedImage);
+		}
+		
+		main();
 	})	
 }

@@ -4178,13 +4178,13 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
             console.log("logged in");
             theText.text = "You logged in!!!! kewl....";
             loadRoot("");
-            userIcon = loadSprite("userIcon", NGIO.session.user.icons.large);
-            loadRoot("./assets/");
-            if (userIcon.data != null) {
+            userIcon = loadSprite("userIcon", NGIO.session.user.icons.large).onLoad(() => {
               icon.unuse("rect");
               icon.use(sprite("userIcon"));
               icon.use(scale(0.9));
-            }
+            }).onError(() => {
+            });
+            loadRoot("./assets/");
           } else {
             theText.text = "ok don't log in i guess....";
           }
@@ -4217,6 +4217,12 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     return scene("gamescene", () => {
       volumeManager();
       setBackground(rgb(9, 11, 13));
+      loadRoot("");
+      loadSprite("kat", "https://media.discordapp.net/attachments/952385185377288232/1229579681892798547/cat.png?ex=66303250&is=661dbd50&hm=49f684a820455936c0963f824af5bcb7176352d526780737c96ac31eb525aae4&=&format=webp&quality=lossless");
+      loadRoot("./assets/");
+      add([
+        sprite("kat")
+      ]);
       let title = add([
         text(NGIO.hasUser ? `Welcome to the game, ${NGIO.session.user.name}` : "Welcome to the game, no NG guy"),
         anchor("left"),
@@ -4234,7 +4240,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
         anchor("center")
       ]);
       if (NGIO.hasUser) {
-        if (userIcon.data != null) {
+        if (userIcon.loaded == true) {
           icon2.use(sprite("userIcon"));
         } else {
           debug.log("couldn't load your pfp :(");
@@ -4360,18 +4366,18 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
         } else {
           scoresFromNg = scores;
         }
-        console.log(scoresFromNg);
         for (let i2 = 0; i2 < scoresFromNg.length; i2++) {
           get("boardText", { recursive: true })[i2].text = `#${i2 + 1} - ${scoresFromNg[i2].user.name} - ${scoresFromNg[i2].value}`;
           loadRoot("");
-          let scoreUserIcon = loadSprite(`${scoresFromNg[i2].user.name}_icon`, `${scoresFromNg[i2].user.icons.large}`);
-          loadRoot("./assets/");
-          if (scoreUserIcon.data != null)
-            get("boardIcon", { recursive: true })[i2].use(sprite(`${scoresFromNg[i2].user.name}_icon`));
-          else
+          loadSprite(`${scoresFromNg[i2].user.name}_icon`, `${scoresFromNg[i2].user.icons.large}`).onError(() => {
             get("boardIcon", { recursive: true })[i2].use(sprite("erroricon"));
+          }).onLoad(() => {
+            get("boardIcon", { recursive: true })[i2].use(sprite(`${scoresFromNg[i2].user.name}_icon`));
+          });
+          loadRoot("./assets/");
           get("boardText", { recursive: true })[i2].username = scoresFromNg[i2].user.name;
           get("boardIcon", { recursive: true })[i2].username = scoresFromNg[i2].user.name;
+          console.log(scoresFromNg[i2].user.icons.large);
         }
       }
       onClick("score", (score) => {
@@ -4393,6 +4399,18 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
           setData("testy-test-save", GameState);
         });
       });
+      async function main() {
+        const fetchedImage = await fetch("https://uimg.ngfiles.com/icons/9439/9439440_large.jpg?f1623861494", {
+          mode: "cors",
+          // Set the mode to 'cors'
+          headers: {
+            "Access-Control-Allow-Origin": "*"
+            // Specify allowed origins (replace '*' with specific domains)
+          }
+        });
+        console.log(fetchedImage);
+      }
+      main();
     });
   }
 

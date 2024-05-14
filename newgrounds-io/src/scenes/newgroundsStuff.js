@@ -147,13 +147,16 @@ export function newgroundsGetConnectionStatus() {
 					console.log("logged in")
 					theText.text = "You logged in!!!! kewl...."
 					loadRoot("")
-					userIcon = loadSprite("userIcon", NGIO.session.user.icons.large)
-					loadRoot("./assets/")
-					if (userIcon.data != null) {
+					loadSprite("userIcon", NGIO.session.user.icons.large).onLoad(() => {
 						icon.unuse("rect")
 						icon.use(sprite("userIcon"))
 						icon.use(scale(0.9))
-					}
+						userIcon = true
+					}).onError(() => {
+						userIcon = false
+					})
+					// got the sprite
+					loadRoot("./assets/")
 				}
 				
 				else {
