@@ -83,7 +83,7 @@ export function gamescene() {
 
 					else if (n.noteOver.timeOnNote > 0.1 && n.noteOver.timeOnNote < 0.2) {
 						let rating = add([
-							text("Sick"),
+							text("Sick!"),
 							anchor("center"),
 							scale(2.15),
 							pos(center()),
