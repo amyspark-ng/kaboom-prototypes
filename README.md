@@ -5,4 +5,4 @@ Repository for silly little kaboom prototypes
 [NGIO-JS (ng link)](https://www.newgrounds.com/projects/games/5567283/preview) / [NGIO-JS](https://amyspark-ng.github.io/kaboom-prototypes/newgrounds-io/www/index.html)<br>
 [FNF clone](https://amyspark-ng.github.io/kaboom-prototypes/rhythm-test/www/index.html)<br>
 
-[Improved trail component](https://amyspark-ng.github.io/kaboom-prototypes/trail/www/index.html)
+[Improved trail component](https://amyspark-ng.github.io/kaboom-prototypes/trailComp/www/index.html)
